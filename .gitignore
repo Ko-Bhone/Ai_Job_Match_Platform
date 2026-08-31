@@ -1,0 +1,25 @@
+#Virtual Environment
+venv/
+.venv/
+
+#Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+#Enviroment Variables
+.env
+
+#IDE
+.vscode/
+.ide/
+
+#Testing
+.pytest_cache/
+
+#Upload Files
+uploads/
+
+#OS
+.DS_Store
+
