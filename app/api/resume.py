@@ -5,6 +5,7 @@ from pathlib import Path
 from fastapi import APIRouter, UploadFile, File, HTTPException, status
 from app.services.resume_parser import extract_text_from_pdf
 from app.services.text_cleaner import clean_text
+from app.services.skill_extractor import extract_skills
 
 
 router = APIRouter()
@@ -41,8 +42,11 @@ async def upload_resume(file: UploadFile = File(...)):
     if not extracted_text.strip():
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Could not extract text form this pdf")
 
-    #8.Clean extracted text
+    #8.Clean text
     cleaned_text = clean_text(extracted_text)
+
+    #9. Extract skills
+    extracted_skills = extract_skills(cleaned_text)
 
     return {
         "Message": "Resume Uploaded Successfully",
@@ -50,7 +54,8 @@ async def upload_resume(file: UploadFile = File(...)):
         "stored_filename": unique_filename,
         "content_type": file.content_type,
         "extracted_text": extracted_text,
-        "cleaned_text": cleaned_text
+        "cleaned_text": cleaned_text,
+        "extracted_skills": extracted_skills
     }
 
 
