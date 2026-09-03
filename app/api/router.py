@@ -15,3 +15,5 @@ api_router.include_router(rag.router, prefix="/rag", tags=["RAG"])
 api_router.include_router(resume.router, prefix="/resume", tags=["Resumes"])
 
 api_router.include_router(jobs_router, prefix="/jobs", tags=["Jobs"])
+
+api_router.include_router(matching.router, prefix="/matching", tags=["Matching"])
