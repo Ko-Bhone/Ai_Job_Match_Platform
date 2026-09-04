@@ -13,10 +13,8 @@ def match_skills(resume_skills: list[str], job_skills: list[str]) -> dict:
     extra_skills = sorted(resume_set.difference(job_set))
 
     match_percentage = (len(matched_skills) / len(job_set)) * 100
-
     return {
         "matched_skills": matched_skills,
         "missing_skills": missing_skills,
         "extra_skills": extra_skills,
-        "match_percentage": round(match_percentage, 2)
-    }
+        "match_percentage": round(match_percentage, 2)}

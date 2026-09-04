@@ -7,9 +7,7 @@ from app.services.resume_parser import extract_text_from_pdf
 from app.services.text_cleaner import clean_text
 from app.services.skill_extractor import extract_skills
 
-
 router = APIRouter()
-
 UPLOAD_DIR = Path("uploads/resume")
 UPLOAD_DIR.mkdir(parents=True, exist_ok = True)
 
@@ -55,7 +53,6 @@ async def upload_resume(file: UploadFile = File(...)):
         "content_type": file.content_type,
         "extracted_text": extracted_text,
         "cleaned_text": cleaned_text,
-        "extracted_skills": extracted_skills
-    }
+        "extracted_skills": extracted_skills}
 
 
