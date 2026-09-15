@@ -17,4 +17,4 @@ class MatchResult(Base):
     skill_weight : Mapped[float] = mapped_column(Float, default=0.70)
     similarity_weight : Mapped[float] = mapped_column(Float, default=0.30)
     final_match_score : Mapped[float | None] = mapped_column(Float, nullable=True)
-    created_at : Mapped[datetime] = mapped_column(DateTime, default = datetime.utcnow())
+    created_at : Mapped[datetime] = mapped_column(DateTime, default = datetime.utcnow)
