@@ -1,8 +1,10 @@
-from fastapi import APIRouter, status
+from fastapi import APIRouter, status, Depends
 from app.schemas.job import JobDescriptionRequest
 from app.services.text_cleaner import clean_text
 from app.services.skill_extractor import extract_skills
-
+from sqlalchemy.orm import Session
+from app.database.session import get_db
+from app.models.job import Job
 
 router = APIRouter()
 
@@ -21,5 +23,11 @@ async def analyze_job(job: JobDescriptionRequest):
         "job_description" : raw_text,
         "cleaned_text" : cleaned_text,
         "extracted_skills" : extracted_skills}
+
+@router.post("/analyze")
+def analyze_job(request : JobDescriptionRequest,
+                db: Session = Depends(get_db)):
+    return analyze_job(db=db)
+
 
 

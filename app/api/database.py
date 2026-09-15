@@ -3,6 +3,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.resume import Resume
+from app.models.job import Job
 
 router = APIRouter(prefix="/database", tags=["Database"])
 
@@ -31,4 +32,23 @@ def get_resume(resume_id : int, db: Session = Depends(get_db)):
     return {
         "Message" : "Resume Retrieved Successfully!",
         "resume" : resume
+    }
+
+@router.get("/jobs")
+def get_jobs(db: Session = Depends(get_db)):
+    jobs = db.query(Job).all()
+    return {
+        "Message" : "Jobs Retrieved Successfully!",
+        "count" : len(jobs),
+        "jobs" : jobs
+    }
+
+@router.get("/jobs/{job_id}")
+def get_job(job_id:int, db: Session = Depends(get_db)):
+    job = db.query(Job).filter(Job.id == job_id).first()
+    if not job:
+        raise HTTPException(status_code=404, detail="Job not found")
+    return {
+        "Message" : "Job Retrieved Successfully!",
+        "job" : job
     }
