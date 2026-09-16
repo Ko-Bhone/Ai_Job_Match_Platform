@@ -4,6 +4,7 @@ from app.schemas.matching import SkillMatchRequest
 from app.services.skill_matcher import match_skills as calculate_skill_match
 from app.database.session import get_db
 from app.models.match_result import MatchResult
+from app.services.text_similarity import calculate_text_similarity
 
 router = APIRouter()
 
@@ -41,12 +42,21 @@ def create_match_result(
     extra_skills = result["extra_skills"]
     skill_match_percentage = result["match_percentage"]
 
+    # Text Similarity
+    similarity_result = calculate_text_similarity(
+        resume_text = data.resume_text,
+        job_description = data.job_description
+    )
+    text_similarity_percentage = (similarity_result["similarity_percentage"])
+    similarity_score = similarity_result["similarity_score"]
+
     #3. Weighted Scoring
     skill_weight = 0.70
     similarity_weight = 0.30
     text_similarity_percentage = 0.0
     final_match_score = (
         skill_match_percentage * skill_weight + text_similarity_percentage * similarity_weight)
+    final_match_score = round(final_match_score, 2)
 
     #4. Create MatchResult
     match_result = MatchResult(
@@ -77,6 +87,7 @@ def create_match_result(
         "missing_skills" : match_result.missing_skills,
         "extra_skills" : match_result.extra_skills,
         "skill_match_percentage" : match_result.skill_match_percentage,
+        "similarity_score" : round(similarity_score, 2),
         "text_similarity_percentage" : match_result.text_similarity_percentage,
         "skill_weight" : match_result.skill_weight,
         "similarity_weight" : match_result.similarity_weight,
