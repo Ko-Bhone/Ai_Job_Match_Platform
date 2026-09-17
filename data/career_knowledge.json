@@ -1,0 +1,20 @@
+[
+  {
+    "skill": "aws",
+    "title": "AWS Fundamentals",
+    "content": "Learn AWS core services including EC2, S3, IAM, networking and deployment basics.",
+    "level": "beginner"
+  },
+  {
+    "skill": "natural language processing",
+    "title": "NLP Fundamentals",
+    "content": "Learn text preprocessing, tokenization, named entity recognition, text classification and embeddings.",
+    "level": "beginner"
+  },
+  {
+    "skill": "rag",
+    "title": "Retrieval Augmented Generation",
+    "content": "Learn document chunking, embeddings, vector databases, similarity search and retrieval augmented generation pipelines.",
+    "level": "intermediate"
+  }
+]
