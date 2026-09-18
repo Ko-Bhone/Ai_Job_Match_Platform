@@ -1,5 +1,4 @@
 from fastapi import APIRouter, status
-
 from app.schemas.similarity import TextSimilarityRequest
 from app.services.text_similarity import calculate_text_similarity
 
