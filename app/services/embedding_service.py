@@ -11,3 +11,7 @@ def create_embeddings(chunks : list[dict]) -> list[dict]:
         embedded_chunks.append({**chunk, "embedding": embedding.tolist()})
     return embedded_chunks
 
+def create_query_embedding(text: str) -> list[float]:
+    embedding = model.encode(text, convert_to_numpy=True)
+    return embedding.tolist()
+
