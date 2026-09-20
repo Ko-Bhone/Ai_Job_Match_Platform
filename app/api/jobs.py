@@ -6,7 +6,6 @@ from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.job import Job
 
-
 router = APIRouter()
 
 @router.post("/analyze", status_code=status.HTTP_200_OK)
@@ -43,8 +42,3 @@ async def analyze_job(job: JobDescriptionRequest, db: Session = Depends(get_db))
         "cleaned_text" : cleaned_text,
         "extracted_skills" : extracted_skills
     }
-
-
-
-
-

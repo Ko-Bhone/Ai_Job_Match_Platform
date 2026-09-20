@@ -2,8 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from app.database.session import get_db
 from app.models.match_result import MatchResult
-from app.services.rag_service import generate_recommendations
-
+from app.services.rag_service import generate_recommendations as generate_rag_recommendations
 
 router = APIRouter()
 
@@ -13,8 +12,8 @@ def generate_recommendations(match_result_id: int, db: Session = Depends(get_db)
     if not match_result:
         raise HTTPException(
             status_code = status.HTTP_404_NOT_FOUND,
-            detail = f"Match result with id {match_result_id} not found"
-        )
+            detail = f"Match result with id {match_result_id} not found")
+
     missing_skills = match_result.missing_skills or []
     if not missing_skills:
         return {
@@ -22,7 +21,8 @@ def generate_recommendations(match_result_id: int, db: Session = Depends(get_db)
             "match_result_id": match_result_id,
             "recommendations": []
         }
-    recommendations = generate_recommendations(db=db, missing_skills=missing_skills)
+
+    recommendations = generate_rag_recommendations(db=db, missing_skills=missing_skills)
     return {
         "Message":"RAG recommendations generated Successfully",
         "match_result_id": match_result_id,
