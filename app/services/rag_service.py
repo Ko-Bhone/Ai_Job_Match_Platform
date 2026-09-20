@@ -1,2 +1,29 @@
 from sqlalchemy.orm import Session
 from app.services.embedding_service import create_query_embedding
+from app.services.vector_search import search_similar_chunks
+
+def generate_recommendations(db: Session, missing_skills: list[str],
+                             top_k: int=2) -> list[dict]:
+
+    recommendations = []
+    for skill in missing_skills:
+        query = (f"Learning resources & career guidance for {skill}")
+        query_embedding = create_query_embedding(query)
+        relevant_chunks = search_similar_chunks(db=db, query_embedding=query_embedding, top_k = top_k)
+        retrieved_knowledge = []
+        for chunk in relevant_chunks:
+            retrieved_knowledge.append({
+                "knowledge_id": chunk.id,
+                "skill": chunk.skill,
+                "title": chunk.title,
+                "content": chunk.content,
+                "level": chunk.level
+            })
+        recommendations.append({
+            "missing_skills": skill,
+            "recommendations": (f"Focus on improving your {skill} skills."
+                                f"Use the retrieved learning materials below as your study roadmap"),
+            "retrieved_knowledge": retrieved_knowledge
+        })
+
+    return recommendations
