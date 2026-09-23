@@ -53,6 +53,5 @@ async def upload_resume(file: UploadFile = File(...)):
         "content_type": file.content_type,
         "extracted_text": extracted_text,
         "cleaned_text": cleaned_text,
-        "extracted_skills": extracted_skills}
-
-
+        "extracted_skills": extracted_skills
+    }

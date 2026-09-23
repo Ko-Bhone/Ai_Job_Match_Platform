@@ -16,7 +16,6 @@ def get_matches():
 
 @router.post("/match", status_code=status.HTTP_201_CREATED)
 def create_match_result(data: MatchRequest, db: Session = Depends(get_db)):
-
     # 1. Get Resume from Database
     resume = (db.query(Resume).filter(Resume.id == data.resume_id).first())
     if not resume:
@@ -108,4 +107,5 @@ def create_match_result(data: MatchRequest, db: Session = Depends(get_db)):
         "text_similarity_percentage": match_result.text_similarity_percentage,
         "skill_weight": match_result.skill_weight,
         "similarity_weight": match_result.similarity_weight,
-        "final_match_score": match_result.final_match_score}
+        "final_match_score": match_result.final_match_score
+    }

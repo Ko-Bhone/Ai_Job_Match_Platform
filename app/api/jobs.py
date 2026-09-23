@@ -40,5 +40,4 @@ async def analyze_job(job: JobDescriptionRequest, db: Session = Depends(get_db))
         "job_id" : new_job.id,
         "job_description" : raw_text,
         "cleaned_text" : cleaned_text,
-        "extracted_skills" : extracted_skills
-    }
+        "extracted_skills" : extracted_skills}

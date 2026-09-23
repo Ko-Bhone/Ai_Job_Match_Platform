@@ -13,7 +13,8 @@ def database_health(db: Session = Depends(get_db)):
         db.execute(text("SELECT 1"))
         return {"Message": "Database Connection Successfully!"}
     except Exception as error:
-        return {"Message" : "Database Connection Failed!", "error": str(error)}
+        return {"Message" : "Database Connection Failed!", "error": str(error)
+                }
 
 @router.get("/resumes")
 def get_resumes(db: Session = Depends(get_db)):

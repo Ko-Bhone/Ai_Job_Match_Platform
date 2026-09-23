@@ -8,9 +8,5 @@ router = APIRouter()
 async def calculate_final_score(data: MatchScoreRequest):
     result =  calculate_final_match_score(
         skill_match_percentage = data.skill_match_percentage,
-        text_similarity_percentage = data.text_similarity_percentage
-    )
-
-    return {
-        "Message" : "Final Match Score Calculated Successfully", **result
-    }
+        text_similarity_percentage = data.text_similarity_percentage)
+    return {"Message" : "Final Match Score Calculated Successfully", **result}
