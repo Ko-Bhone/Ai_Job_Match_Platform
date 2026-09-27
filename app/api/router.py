@@ -1,5 +1,5 @@
 from fastapi import APIRouter
-from app.api import resume, jobs, matching, similarity, scoring, database, rag
+from app.api import (resume, jobs, matching, similarity, scoring, database, rag)
 
 api_router = APIRouter()
 
