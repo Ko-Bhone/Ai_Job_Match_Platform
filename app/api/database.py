@@ -5,7 +5,7 @@ from app.database.session import get_db
 from app.models.resume import Resume
 from app.models.job import Job
 
-router = APIRouter(prefix="/database", tags=["Database"])
+router = APIRouter()
 
 @router.get("/health")
 def database_health(db: Session = Depends(get_db)):
@@ -13,8 +13,7 @@ def database_health(db: Session = Depends(get_db)):
         db.execute(text("SELECT 1"))
         return {"Message": "Database Connection Successfully!"}
     except Exception as error:
-        return {"Message" : "Database Connection Failed!", "error": str(error)
-                }
+        raise HTTPException(status_code=500, detail=f"Database Connection Failed! {str(error)}")
 
 @router.get("/resumes")
 def get_resumes(db: Session = Depends(get_db)):
