@@ -13,7 +13,7 @@ def create_match_result(db: Session, resume_id: int, job_id: int) -> dict:
     resume = (db.query(Resume).filter(Resume.id == resume_id).first())
     if not resume:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail = "Resume with id {resume_id} not found!")
+                            detail = f"Resume with id {resume_id} not found!")
 
     #2. Get Job
     job = (db.query(Job).filter(Job.id == job_id).first())
@@ -33,9 +33,9 @@ def create_match_result(db: Session, resume_id: int, job_id: int) -> dict:
     if not job.cleaned_text:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
                             detail = "Job Cleaned Text is not provided!")
-    if not resume.extracted_skills:
+    if not job.extracted_skills:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
-                            detail = "Resume skills are Empty!")
+                            detail = "Job skills are Empty!")
 
     #5. Skill Matching
     skill_result = match_skills(resume_skills = resume.extracted_skills, job_skills = job.extracted_skills)
@@ -58,7 +58,7 @@ def create_match_result(db: Session, resume_id: int, job_id: int) -> dict:
         job_id = job_id,
         matched_skills = skill_result["matched_skills"],
         missing_skills = skill_result["missing_skills"],
-        extracted_skills = skill_result["extracted_skills"],
+        extra_skills = skill_result["extracted_skills"],
         skill_match_percentage = skill_result["skill_match_percentage"],
         text_similarity_percentage = skill_result["text_similarity_percentage"],
         skill_weight = score_result["skill_weight"],
