@@ -5,15 +5,15 @@ from app.schemas.matching import MatchRequest
 from app.services.matching_services import create_match_result
 from app.models.match_result import MatchResult
 
-router = APIRouter()
+api_router = APIRouter()
+router = api_router
 
 @router.post("/match", status_code=status.HTTP_201_CREATED)
 def match_resume_with_job(data: MatchRequest, db:Session=Depends(get_db)):
     return create_match_result(
         db=db,
         resume_id=data.resume_id,
-        job_id=data.job_id
-    )
+        job_id=data.job_id)
 
 @router.get("/{match_result_id}", status_code=status.HTTP_200_OK)
 def get_match_result(match_result_id:int, db:Session=Depends(get_db)):
@@ -35,3 +35,4 @@ def get_match_result(match_result_id:int, db:Session=Depends(get_db)):
         "final_match_score" : match_result.final_match_score,
         "created_at" : match_result.created_at
     }
+
