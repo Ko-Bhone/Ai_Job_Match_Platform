@@ -12,7 +12,11 @@ def match_skills(resume_skills: list[str], job_skills: list[str]) -> dict:
     # Present in resume but not required by job
     extra_skills = sorted(resume_set.difference(job_set))
 
-    match_percentage = (len(matched_skills) / len(job_set)) * 100
+    if not job_set:
+        match_percentage = 0.0
+    else:
+        match_percentage = len(matched_skills) / len(job_set) * 100
+
     return {
         "matched_skills": matched_skills,
         "missing_skills": missing_skills,
