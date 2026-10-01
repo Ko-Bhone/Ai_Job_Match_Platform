@@ -5,8 +5,7 @@ from app.schemas.matching import MatchRequest
 from app.services.matching_services import create_match_result
 from app.models.match_result import MatchResult
 
-api_router = APIRouter()
-router = api_router
+router = APIRouter()
 
 @router.post("/match", status_code=status.HTTP_201_CREATED)
 def match_resume_with_job(data: MatchRequest, db:Session=Depends(get_db)):

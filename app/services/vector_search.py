@@ -7,8 +7,10 @@ def search_similar_chunks(db: Session, query_embedding: list[float], skill: str 
     query = db.query(KnowledgeChunk)
     if skill:
         query = query.filter(KnowledgeChunk.skill == skill)
+
         result = query.filter(KnowledgeChunk.embedding.is_not(None)._order_by
                               (KnowledgeChunk.embedding.cosine_distance(query_embedding)).
                               limit(top_k).all())
 
     return result
+

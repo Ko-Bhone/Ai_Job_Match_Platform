@@ -38,19 +38,16 @@ def create_match_result(db: Session, resume_id: int, job_id: int) -> dict:
                             detail = "Job skills are Empty!")
 
     #5. Skill Matching
-    skill_result = match_skills(resume_skills = resume.extracted_skills, job_skills = job.extracted_skills)
+    skill_result = match_skills(resume_skills = resume.extracted_skills,
+                                job_skills = job.extracted_skills)
 
     #6. Text Similarity
-    similarity_result = calculate_text_similarity(
-        resume_text = resume.cleaned_text,
-        job_description = job.cleaned_text
-    )
+    similarity_result = calculate_text_similarity(resume_text = resume.cleaned_text,
+                                                  job_description = job.cleaned_text)
 
     #7. Final weight Score
-    score_result = calculate_final_match_score(
-        skill_match_percentage=skill_result["match_percentage"],
-        text_similarity_percentage=similarity_result["similarity_percentage"]
-    )
+    score_result = calculate_final_match_score(skill_match_percentage=skill_result["match_percentage"],
+                                               text_similarity_percentage=similarity_result["similarity_percentage"]    )
 
     #8. Create MatchResult
     match_result = MatchResult(
