@@ -51,17 +51,20 @@ def create_match_result(db: Session, resume_id: int, job_id: int) -> dict:
 
     #8. Create MatchResult
     match_result = MatchResult(
-        resume_id = resume_id,
-        job_id = job_id,
-        matched_skills = skill_result["matched_skills"],
-        missing_skills = skill_result["missing_skills"],
-        extra_skills = skill_result["extracted_skills"],
-        skill_match_percentage = skill_result["skill_match_percentage"],
-        text_similarity_percentage = skill_result["text_similarity_percentage"],
-        skill_weight = score_result["skill_weight"],
-        similarity_weight = score_result["similarity_weight"],
-        final_match_score = score_result["final_match_score"]
+        resume_id=resume.id,
+        job_id=job.id,
+        matched_skills=skill_result["matched_skills"],
+        missing_skills=skill_result["missing_skills"],
+        extra_skills=skill_result["extra_skills"],
+        skill_match_percentage=skill_result["match_percentage"],
+        text_similarity_percentage=similarity_result[
+            "similarity_percentage"
+        ],
+        skill_weight=score_result["skill_weight"],
+        similarity_weight=score_result["similarity_weight"],
+        final_match_score=score_result["final_match_score"]
     )
+
 
     #9 Save to Database
     try:
@@ -89,3 +92,4 @@ def create_match_result(db: Session, resume_id: int, job_id: int) -> dict:
         "similarity_weight" : match_result.similarity_weight,
         "final_match_score" : match_result.final_match_score
     }
+
